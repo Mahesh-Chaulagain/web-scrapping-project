@@ -8,19 +8,19 @@ website_html = response.text
 
 soup = BeautifulSoup(website_html, "html.parser")
 
-print(soup.prettify())
-# movies = soup.find_all(name="h3", class_="title")
-# movie_list = []
-# for movie in movies:
-#     name = movie.getText()
-#     movie_list.append(name)
-#
-# movie_rank = [int(rank.getText()[0] for rank in soup.find_all(name="h3", class_="title"))]
-#
-# highest = max(movie_rank)
-# highest_rank = movie_rank.index(highest)
-#
-# print(movie_rank[highest_rank])
-#
-#
-# print(movie)
+# print(soup.prettify())
+
+all_movies = soup.find_all(name="h3", class_="title")
+
+movie_titles = [movie.getText() for movie in all_movies]
+# print(movie_titles)     # prints movies ranked from 100 to 1
+movies = movie_titles[::-1]   # slice operator reverses the order
+
+# using for loop to reverse order
+# for n in range(len(movie_titles) - 1, -1, -1):
+#     print(movie_titles[n])
+
+with open("movies.txt", mode="w", encoding="utf-8") as file:
+    for movie in movies:
+        file.write(f"{movie}\n")
+
